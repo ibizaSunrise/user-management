@@ -25,12 +25,8 @@ function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key i
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
-// import { Modal } from 'bootstrap'
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Users",
-  // comments:{
-  //     Modal
-  // },
   data: function data() {
     return {
       users: [],
@@ -57,19 +53,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         _this.users = data.data;
       });
     },
-    // formHandler(){
-    //     if(!this.editmode){
-    //         this.createUser()
-    //     }else{
-    //         this.updateUser()
-    //     }
-    // },
     createUser: function createUser() {
-      var _this2 = this;
       axios.post('/api/user', _objectSpread({}, this.form)).then(function (res) {
         console.log(res);
-        // new Modal('#staticBackdrop', {}).hide()
-        _this2.getUsers();
+        // const url = new URL('/users', window.location.origin)
+        // window.location.href = url.toString()
       })["catch"](function (e) {
         // if(e.status == 422){
         console.log(e);
@@ -78,9 +66,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       });
     },
     updateUser: function updateUser(id) {
-      var _this3 = this;
       axios.put("/api/user/".concat(id), _objectSpread({}, this.form)).then(function (res) {
-        _this3.getUsers();
+        var url = new URL('/users', window.location.origin);
+        window.location.href = url.toString();
       })["catch"](function (e) {
         // if(e.status == 422){
         console.log(e);
@@ -89,9 +77,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       });
     },
     deleteUser: function deleteUser(id) {
-      var _this4 = this;
+      var _this2 = this;
       axios["delete"]("/api/user/".concat(id)).then(function (res) {
-        _this4.getUsers();
+        _this2.getUsers();
       });
     },
     open: function open(mode) {
@@ -344,7 +332,7 @@ var render = function render() {
         return _vm.createUser.apply(null, arguments);
       }
     }
-  }, [_vm._v("Add user")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("Add\n                        user\n                    ")]), _vm._v(" "), _c("button", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -361,7 +349,7 @@ var render = function render() {
         return _vm.updateUser(_vm.form.id);
       }
     }
-  }, [_vm._v("Update user")])])])])])]) : _vm._e();
+  }, [_vm._v("Update user\n                    ")])])])])])]) : _vm._e();
 };
 var staticRenderFns = [function () {
   var _vm = this,

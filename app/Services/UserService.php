@@ -5,8 +5,11 @@ namespace App\Services;
 
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserService
 {
@@ -27,6 +30,18 @@ class UserService
         $user->save();
         return $user;
 
+    }
+
+    public function storeImage($image)
+    {
+        $name = md5(Carbon::now() . '_' . $image->getClientOriginalName()) . '.' . $image->getClientOriginalExtension();
+        $filePath = Storage::disk('public')->putFileAs('/images', $image, $name);
+
+        $user = Auth::user();
+
+        $user->update([
+            'path' => url('/storage/'.$filePath)
+        ]);
     }
 
 

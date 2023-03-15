@@ -37,7 +37,8 @@ export default {
                 })
                     .then((r => {
                         localStorage.setItem('x_xsrf_token', r.config.headers['X-XSRF-TOKEN'])
-                        this.$router.push({name: 'users'})
+                        const url = new URL('/users', window.location.origin)
+                        window.location.href = url.toString()
                     }))
                     .catch(err => {
                         console.log(err)

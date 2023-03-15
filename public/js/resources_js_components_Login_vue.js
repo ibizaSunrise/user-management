@@ -28,9 +28,8 @@ __webpack_require__.r(__webpack_exports__);
           password: _this.password
         }).then(function (r) {
           localStorage.setItem('x_xsrf_token', r.config.headers['X-XSRF-TOKEN']);
-          _this.$router.push({
-            name: 'users'
-          });
+          var url = new URL('/users', window.location.origin);
+          window.location.href = url.toString();
         })["catch"](function (err) {
           console.log(err);
         });

@@ -5347,7 +5347,9 @@ __webpack_require__.r(__webpack_exports__);
       if (this.token) {
         axios.get('/api/user/auth').then(function (res) {
           _this2.authUser = res.data;
-          _this2.src = res.data.path;
+          if (res.data.path) {
+            _this2.src = res.data.path;
+          }
         });
       }
     }
@@ -5391,7 +5393,13 @@ var render = function render() {
         name: "users"
       }
     }
-  }, [_vm._v("Users")]) : _vm._e()], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v("Users")]) : _vm._e(), _vm._v(" "), _c("a", {
+    staticClass: "m-lg-2",
+    attrs: {
+      target: "_blank",
+      href: "/api/documentation"
+    }
+  }, [_vm._v("Swagger")])], 1), _vm._v(" "), _c("div", {
     staticClass: "d-flex align-items-center"
   }, [!_vm.token ? _c("router-link", {
     staticClass: "nav-link",

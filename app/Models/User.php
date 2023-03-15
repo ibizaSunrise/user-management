@@ -8,6 +8,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * Transform the resource into an array.
+ *
+ * @OA\Property(format="string", title="name", default="Demo", description="Name", property="name"),
+ * @OA\Property(format="string", title="surname", default="demo", description="Surname", property="username"),
+ * @OA\Property(format="string", title="email", default="demo", description="Email", property="email"),
+ * @OA\Property(format="string", title="path", default="https://via.placeholder.com/640x480.png/0000bb?text=avatar", description="Avatar Path", property="path")
+ * @param  \Illuminate\Http\Request  $request
+ * @return array
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;

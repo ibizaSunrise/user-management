@@ -5,6 +5,8 @@
                 <div class="d-flex align-items-center">
                     <a class="app-logo me-3" href="/">User Management</a>
                     <router-link v-if="token" class="nav-link" :to="{name: 'users'}">Users</router-link>
+                    <a target="_blank" class="m-lg-2" href="/api/documentation">Swagger</a>
+
                 </div>
                 <div class="d-flex align-items-center">
                     <router-link v-if="!token" class="nav-link" :to="{name: 'user.login'}">Log in</router-link>
@@ -58,7 +60,10 @@ export default {
             if(this.token){
                 axios.get('/api/user/auth').then(res => {
                     this.authUser = res.data
-                    this.src = res.data.path
+                    if(res.data.path){
+                        this.src = res.data.path
+                    }
+
                 })
             }
         },

@@ -55,7 +55,8 @@ export default {
                         password_confirmation: this.password_confirmation
                     }).then(res => {
                         localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
-                        this.$router.push({name: 'users'})
+                        const url = new URL('/users', window.location.origin)
+                        window.location.href = url.toString()
                     }).catch(er => {
                         console.log(er)
                     })

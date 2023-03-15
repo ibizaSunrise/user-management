@@ -46,6 +46,7 @@ A very simple Laravel 8 + Vue 2 + AdminLTE 3 based Curd Starter template for SPA
 - `php artisan storage:link`
 - `npm run dev`
 - `php artisan serve`
+- `admin login: admin@gmail.com; pas: 123123`
 
 #### To reset db to first state
 
@@ -53,7 +54,9 @@ A very simple Laravel 8 + Vue 2 + AdminLTE 3 based Curd Starter template for SPA
 
 ## Install with Docker
 
-## Unit Test
+## FeatureTests Test
+
+- `php artisan test`
 
 ## License
 

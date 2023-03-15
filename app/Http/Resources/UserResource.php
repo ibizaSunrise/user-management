@@ -6,6 +6,16 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
 {
+
+    /**
+     * @OA\Schema(
+     *   @OA\Xml(name="UserResource"),
+     *   @OA\Property(property="data", type="array",
+     *      @OA\Items(ref="#/components/schemas/User"))
+     *   ),
+     * )
+     */
+
     /**
      * Transform the resource into an array.
      *

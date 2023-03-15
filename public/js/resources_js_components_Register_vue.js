@@ -34,9 +34,8 @@ __webpack_require__.r(__webpack_exports__);
           password_confirmation: _this.password_confirmation
         }).then(function (res) {
           localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN']);
-          _this.$router.push({
-            name: 'users'
-          });
+          var url = new URL('/users', window.location.origin);
+          window.location.href = url.toString();
         })["catch"](function (er) {
           console.log(er);
         });

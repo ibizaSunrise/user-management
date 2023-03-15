@@ -12,8 +12,32 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
-
+/**
+ * @OA\Info(
+ *      version="1.0.0",
+ *      title="Laravel OpenApi Demo Documentation",
+ *      description="L5 Swagger OpenApi description",
+ *      @OA\Contact(
+ *          email="admin@admin.com"
+ *      ),
+ *      @OA\License(
+ *          name="Apache 2.0",
+ *          url="http://www.apache.org/licenses/LICENSE-2.0.html"
+ *      )
+ * )
+ *
+ * @OA\Server(
+ *      url=L5_SWAGGER_CONST_HOST,
+ *      description="Demo API Server"
+ * )
+ *
+ * @OA\Tag(
+ *     name="User",
+ *     description="API Endpoints of Projects"
+ * )
+ */
 class UserController extends Controller
 {
     public $service;
@@ -23,10 +47,33 @@ class UserController extends Controller
         $this->service = $service;
     }
 
+    /**
+     * @OA\Get(
+     *      path="/user",
+     *      operationId="getUsersList",
+     *      tags={"User"},
+     *      summary="Get list of users",
+     *      description="Returns list of users",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              ref="#/components/schemas/User"
+     *          )
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
 
     public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-
         return UserResource::collection(User::all());
     }
 
@@ -42,6 +89,24 @@ class UserController extends Controller
         $user = $this->service->makeNewUser($data);
         return new UserResource($user);
     }
+
+//    public function store(Request $request)
+//    {
+//        $validator = Validator::make($request->all(), [
+//            'name' => ['required', 'string', 'max:255'],
+//            'surname' => ['required', 'string', 'max:255'],
+//            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+//            'password' => ['required', 'string', 'min:8'],
+//        ]);
+//
+//        if ($validator->fails()) {
+//           return $this->sendError($validator, 'Validation errors');
+//        }
+//
+//        $validated = $validator->validated();
+//        $user = $this->service->makeNewUser($validated);
+//        return new UserResource($user);
+//    }
 
 
     /**
@@ -78,29 +143,12 @@ class UserController extends Controller
 
     public function handleImage(Request $request)
     {
-
         $data = $request->validate([
             'images' => 'nullable|array',
         ]);
-
-
-        $images = $data['images'];
-        $image = $images[0];
-//        unset($data['images']);
-
-        //first image save to db
-
-        $name = md5(Carbon::now() . '_' . $image->getClientOriginalName()) . '.' . $image->getClientOriginalExtension();
-        $filePath = Storage::disk('public')->putFileAs('/images', $image, $name);
-
-        $user = Auth::user();
-
-        $user->update([
-            'path' => url('/storage/'.$filePath)
-        ]);
-
+        $image = $data['images'][0];
+        $this->service->storeImage($image);
         return response()->noContent();
-
 
     }
 
