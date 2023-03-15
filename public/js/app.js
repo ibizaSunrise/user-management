@@ -5382,19 +5382,19 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex align-items-center"
   }, [_c("a", {
-    staticClass: "app-logo me-3",
+    staticClass: "app-logo me-3 hv",
     attrs: {
       href: "/"
     }
   }, [_vm._v("User Management")]), _vm._v(" "), _vm.token ? _c("router-link", {
-    staticClass: "nav-link",
+    staticClass: "nav-link hv",
     attrs: {
       to: {
         name: "users"
       }
     }
   }, [_vm._v("Users")]) : _vm._e(), _vm._v(" "), _c("a", {
-    staticClass: "nav-link m-lg-2",
+    staticClass: "nav-link m-lg-2 hv",
     attrs: {
       target: "_blank",
       href: "/api/documentation"
@@ -5402,21 +5402,21 @@ var render = function render() {
   }, [_vm._v("Swagger")])], 1), _vm._v(" "), _c("div", {
     staticClass: "d-flex align-items-center"
   }, [!_vm.token ? _c("router-link", {
-    staticClass: "nav-link",
+    staticClass: "nav-link hv",
     attrs: {
       to: {
         name: "user.login"
       }
     }
   }, [_vm._v("Log in")]) : _vm._e(), _vm._v(" "), !_vm.token ? _c("router-link", {
-    staticClass: "btn btn-primary m-lg-2",
+    staticClass: "btn btn-primary m-lg-2 bhv",
     attrs: {
       to: {
         name: "user.register"
       }
     }
   }, [_vm._v("Sign up\n                ")]) : _vm._e(), _vm._v(" "), _vm.token ? _c("a", {
-    staticClass: "btn btn-primary m-lg-2 btn btn-primary",
+    staticClass: "btn btn-primary m-lg-2 bhv",
     attrs: {
       href: "#"
     },
@@ -10843,7 +10843,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.app-logo[data-v-bb962f12] {\n    color: #0d6efd;\n    font-size: 1.5rem;\n    font-weight: bold;\n    text-align: center;\n    text-decoration: none;\n}\n.my-img[data-v-bb962f12]{\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.app-logo[data-v-bb962f12] {\n    color: #0d6efd;\n    font-size: 1.5rem;\n    font-weight: bold;\n    text-align: center;\n    text-decoration: none;\n}\n.my-img[data-v-bb962f12]{\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.hv[data-v-bb962f12]:hover{\n    color: #0c63e4;\n}\n.bhv[data-v-bb962f12]:hover{\n    background-color: #0c63e4;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

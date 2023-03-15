@@ -3,16 +3,16 @@
         <nav class="navbar navbar-light bg-light mb-5">
             <div class="container-fluid">
                 <div class="d-flex align-items-center">
-                    <a class="app-logo me-3" href="/">User Management</a>
-                    <router-link v-if="token" class="nav-link" :to="{name: 'users'}">Users</router-link>
-                    <a target="_blank" class="nav-link m-lg-2" href="/api/documentation">Swagger</a>
+                    <a class="app-logo me-3 hv" href="/">User Management</a>
+                    <router-link v-if="token" class="nav-link hv" :to="{name: 'users'}">Users</router-link>
+                    <a target="_blank" class="nav-link m-lg-2 hv" href="/api/documentation">Swagger</a>
 
                 </div>
                 <div class="d-flex align-items-center">
-                    <router-link v-if="!token" class="nav-link" :to="{name: 'user.login'}">Log in</router-link>
-                    <router-link v-if="!token" class="btn btn-primary m-lg-2" :to="{name: 'user.register'}">Sign up
+                    <router-link v-if="!token" class="nav-link hv" :to="{name: 'user.login'}">Log in</router-link>
+                    <router-link v-if="!token" class="btn btn-primary m-lg-2 bhv" :to="{name: 'user.register'}">Sign up
                     </router-link>
-                    <a v-if="token" @click.prevent="logout" class="btn btn-primary m-lg-2 btn btn-primary" href="#">Logout</a>
+                    <a v-if="token" @click.prevent="logout" class="btn btn-primary m-lg-2 bhv" href="#">Logout</a>
 
                     <router-link v-if="token" class="nav-link d-flex align-items-center" :to="{name: 'user.image'}">
                         <img :src="src" class="rounded-circle my-img"
@@ -81,5 +81,11 @@ export default {
 }
 .my-img{
     object-fit: cover;
+}
+.hv:hover{
+    color: #0c63e4;
+}
+.bhv:hover{
+    background-color: #0c63e4;
 }
 </style>
