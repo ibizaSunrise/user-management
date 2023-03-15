@@ -121,11 +121,11 @@ export default {
                     // const url = new URL('/users', window.location.origin)
                     // window.location.href = url.toString()
                 }).catch(e => {
-                    // if(e.status == 422){
-                    console.log(e)
-                    // this.errors = e.response.data.errors
-                    // }
-                })
+                // if(e.status == 422){
+                console.log(e)
+                // this.errors = e.response.data.errors
+                // }
+            })
 
         },
 
@@ -154,8 +154,6 @@ export default {
         open(mode, id = null) {
             if (mode === 'add') {
                 this.editmode = false
-                console.log('add')
-
             }
             if (mode === 'edit') {
                 this.editmode = true

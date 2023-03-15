@@ -1,5 +1,5 @@
 <template>
-    <div class="container center_div">
+    <div class="container center_div p-5">
 
         <div class="form-outline mb-4">
             <input v-model="name" type="text" id="form3Example5" class="form-control"/>
@@ -69,5 +69,11 @@ export default {
 </script>
 
 <style scoped>
-
+.center_div {
+    margin: 2rem auto;
+    width: 40%; /* value of your choice which suits your alignment */
+    -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+}
 </style>

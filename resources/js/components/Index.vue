@@ -5,12 +5,12 @@
                 <div class="d-flex align-items-center">
                     <a class="app-logo me-3" href="/">User Management</a>
                     <router-link v-if="token" class="nav-link" :to="{name: 'users'}">Users</router-link>
-                    <a target="_blank" class="m-lg-2" href="/api/documentation">Swagger</a>
+                    <a target="_blank" class="nav-link m-lg-2" href="/api/documentation">Swagger</a>
 
                 </div>
                 <div class="d-flex align-items-center">
                     <router-link v-if="!token" class="nav-link" :to="{name: 'user.login'}">Log in</router-link>
-                    <router-link v-if="!token" class="nav-link m-lg-2" :to="{name: 'user.register'}">Sign up
+                    <router-link v-if="!token" class="btn btn-primary m-lg-2" :to="{name: 'user.register'}">Sign up
                     </router-link>
                     <a v-if="token" @click.prevent="logout" class="btn btn-primary m-lg-2 btn btn-primary" href="#">Logout</a>
 

@@ -1,6 +1,5 @@
 <template>
-    <div class="container center_div">
-
+    <div class="container center_div p-5">
         <!-- Email input -->
         <div class="form-outline mb-4">
             <input v-model="email" type="email" id="form3Example3" class="form-control"/>
@@ -51,9 +50,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .center_div {
     margin: 2rem auto;
-    width: 40% /* value of your choice which suits your alignment */
+    width: 40%; /* value of your choice which suits your alignment */
+    -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
 }
 </style>

@@ -5394,7 +5394,7 @@ var render = function render() {
       }
     }
   }, [_vm._v("Users")]) : _vm._e(), _vm._v(" "), _c("a", {
-    staticClass: "m-lg-2",
+    staticClass: "nav-link m-lg-2",
     attrs: {
       target: "_blank",
       href: "/api/documentation"
@@ -5409,7 +5409,7 @@ var render = function render() {
       }
     }
   }, [_vm._v("Log in")]) : _vm._e(), _vm._v(" "), !_vm.token ? _c("router-link", {
-    staticClass: "nav-link m-lg-2",
+    staticClass: "btn btn-primary m-lg-2",
     attrs: {
       to: {
         name: "user.register"

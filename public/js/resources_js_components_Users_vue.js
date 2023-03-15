@@ -86,7 +86,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       if (mode === 'add') {
         this.editmode = false;
-        console.log('add');
       }
       if (mode === 'edit') {
         this.editmode = true;
