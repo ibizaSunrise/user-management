@@ -1,9 +1,6 @@
-
 # Laravel+Vue user management application
 
-
 [![Build Status](https://dev.azure.com/anowarhossain/laravel-vue-crud-starter/_apis/build/status/AnowarCST.laravel-vue-crud-starter?branchName=master)](https://dev.azure.com/anowarhossain/laravel-vue-crud-starter/_build/latest?definitionId=6&branchName=master)
-
 
 ## About Repository
 
@@ -13,10 +10,11 @@ A very simple Laravel 8 + Vue 2 + AdminLTE 3 based Curd Starter template for SPA
 </p>
 
 ## Tech Specification
+
 - php 8
 - node 14.17.0
 - Laravel 8
-- Vue 2 + VueRouter 
+- Vue 2 + VueRouter
 - Laravel Sanctum
 - Bootstrap
 - Test Coverage
@@ -37,25 +35,25 @@ A very simple Laravel 8 + Vue 2 + AdminLTE 3 based Curd Starter template for SPA
 ## Installation
 
 #### Local
+
 - `composer install`
 - `cp .env.example .env`
 - Update `.env` and set your database credentials
 - `php artisan key:generate`
 - `php artisan migrate`
 - `php artisan db:seed`
-- `php artisan passport:install`
 - `npm install`
+- `php artisan storage:link`
 - `npm run dev`
 - `php artisan serve`
 
 #### To reset db to first state
-- `php artisan migrate:fresh --seed`
 
+- `php artisan migrate:fresh --seed`
 
 ## Install with Docker
 
 ## Unit Test
-
 
 ## License
 
