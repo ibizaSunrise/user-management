@@ -9,7 +9,7 @@
 - CRUD User operations
 ![createUser](https://user-images.githubusercontent.com/66250856/225462133-7757a8ba-b6dc-4ed5-8137-9f20667fcc4d.jpg)
 ![updateUser](https://user-images.githubusercontent.com/66250856/225462143-9d497425-7856-422d-b45f-0480f3472eb5.jpg)
--Images uploading 
+- Images uploading 
 ![uploadAvatar](https://user-images.githubusercontent.com/66250856/225462151-fb29e070-cddb-4ff8-9b98-b2ec58f64f4a.jpg)
 
 
