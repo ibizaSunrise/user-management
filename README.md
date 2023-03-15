@@ -18,16 +18,12 @@ A very simple Laravel 8 + Vue 2  SPA Application.
 
 ## Features
 
-- Modal based Create+Edit, List with Pagination, Delete with Sweetalert
-- Login, Register, Forget+Reset Password as default auth
-- Profile, Update Profile, Change Password, Avatar
-- Product Management
-- User Management
-- Settings: Categories, Tags
-- Frontend and Backend User ACL with Gate Policy (type: admin/user)
-- Simple Static Dashboard
-- Developer Options for OAuth Clients and Personal Access Token
-- Build with Docker
+- Login, Register using Sanctum
+- User CRUD for auth user
+- Vue form with back-end validation errors messages
+- Upload avatar using vue2Dropzone
+- Feature Tests for User
+- Routing Vue Router
 
 ## Installation
 
