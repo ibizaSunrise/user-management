@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,5 +40,30 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        if ($request->ajax()) {
+            if ($e instanceof ValidationException) {
+                $errors = $e->errors();
+
+                return new JsonResponse([
+                    'status' => 422,
+                    'data' => null,
+                    'errors' => $errors
+                ], 422);
+            }
+
+            return new JsonResponse([
+                'status' => 400,
+                'data' => null,
+                'errors' => [
+                    $e->getMessage()
+                ]
+            ], 400);
+        }
+
+        return parent::render($request, $e);
     }
 }

@@ -9,6 +9,7 @@
 <script>
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+import {EventBus} from "../event-bus";
 
 export default {
     name: "LoadImage",
@@ -37,10 +38,8 @@ export default {
             })
             axios.post('/api/user/image', data)
                 .then(res => {
-                    const url = new URL('/users', window.location.origin)
-                    window.location.href = url.toString()
+                    EventBus.$emit('user.update', res.data.data.user)
                 })
-
         },
 
     }

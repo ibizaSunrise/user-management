@@ -9,33 +9,35 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserService;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+
+
 /**
- * @OA\Info(
- *      version="1.0.0",
- *      title="Laravel OpenApi Demo Documentation",
- *      description="L5 Swagger OpenApi description",
- *      @OA\Contact(
- *          email="admin@admin.com"
- *      ),
- *      @OA\License(
- *          name="Apache 2.0",
- *          url="http://www.apache.org/licenses/LICENSE-2.0.html"
- *      )
- * )
- *
- * @OA\Server(
- *      url=L5_SWAGGER_CONST_HOST,
- *      description="Demo API Server"
- * )
- *
+ * @OA\Info(title="My API", version="0.1")
+ * @OA\Schemes(format="http")
+ * @OA\SecurityScheme(
+ *      securityScheme="bearerAuth",
+ *      in="header",
+ *      name="bearerAuth",
+ *      type="http",
+ *      scheme="bearer",
+ *      bearerFormat="JWT",
+ * ),
  * @OA\Tag(
- *     name="User",
- *     description="API Endpoints of Projects"
+ *     name="Auth",
+ *     description="Auth endpoints",
+ * )
+ * @OA\Tag(
+ *     name="Users",
+ *     description="Users endpoints",
  * )
  */
 class UserController extends Controller
@@ -48,108 +50,97 @@ class UserController extends Controller
     }
 
     /**
+     *
      * @OA\Get(
-     *      path="/user",
-     *      operationId="getUsersList",
-     *      tags={"User"},
-     *      summary="Get list of users",
-     *      description="Returns list of users",
+     *      path="/users",
+     *      operationId="getListOfUsers",
+     *      tags={"Users"},
+     *      description="Get list of users",
+     *      security={{"bearerAuth":{}}},
      *      @OA\Response(
      *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(
-     *              ref="#/components/schemas/User"
-     *          )
+     *          description="Get list of users.",
+     *          @OA\JsonContent(type="object",
+     *              @OA\Property(property="message", type="string"),
+     *              @OA\Property(property="data", type="array",
+     *                  @OA\Items(type="object",
+     *                      @OA\Property(property="id", type="integer"),
+     *                      @OA\Property(property="name", type="string"),
+     *                      @OA\Property(property="surname", type="string"),
+     *                      @OA\Property(property="email", type="string"),
+     *                      @OA\Property(property="path", type="string"),
+     *                  ),
+     *              ),
+     *          ),
      *       ),
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthenticated",
-     *      ),
-     *      @OA\Response(
-     *          response=403,
-     *          description="Forbidden"
-     *      )
-     *     )
+     *       @OA\Response(response=401, description="Unauthorized"),
+     *       @OA\Response(response=404, description="Not Found"),
+     * )
+     *
+     * @return JsonResponse
      */
 
-    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function index(): JsonResponse
     {
-        return UserResource::collection(User::all());
+        return $this->sendResponse([
+            'users' => UserResource::collection(User::all()),
+        ]);
     }
 
 
     /**
      * @param UserRequest $request
-     * @return UserResource
+     * @return JsonResponse
      */
-    public function store(UserRequest $request): UserResource
+    public function store(UserRequest $request): JsonResponse
     {
-
-        $data = $request->validated();
-        $user = $this->service->makeNewUser($data);
-        return new UserResource($user);
+        return $this->sendResponse([
+            'user' => $this->service->makeNewUser($request->validated())
+        ], ' OK', 201);
     }
-
-//    public function store(Request $request)
-//    {
-//        $validator = Validator::make($request->all(), [
-//            'name' => ['required', 'string', 'max:255'],
-//            'surname' => ['required', 'string', 'max:255'],
-//            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-//            'password' => ['required', 'string', 'min:8'],
-//        ]);
-//
-//        if ($validator->fails()) {
-//           return $this->sendError($validator, 'Validation errors');
-//        }
-//
-//        $validated = $validator->validated();
-//        $user = $this->service->makeNewUser($validated);
-//        return new UserResource($user);
-//    }
-
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\User $user
-     * @return UserResource
+     * @param UserRequest $request
+     * @param User $user
+     * @return JsonResponse
      */
-    public function update(UserRequest $request, User $user): UserResource
+    public function update(UserRequest $request, User $user): JsonResponse
     {
-        $data = $request->validated();
-        $user = $this->service->editUser($data, $user);
-        return new UserResource($user);
+        return $this->sendResponse([
+            'user' => $this->service->editUser($user, $request->validated())
+        ], ' OK', 201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\User $user
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return Response
      */
-    public function destroy(User $user): \Illuminate\Http\Response
+    public function destroy(User $user): Response
     {
         $user->delete();
 
         return response()->noContent();
     }
 
-    public function getAuthUser()
+    public function getAuthUser(Request $request): JsonResponse
     {
-        return Auth::user();
+        return $this->sendResponse([
+            'user' => $request->user()
+        ]);
     }
 
-    public function handleImage(Request $request)
+    public function handleImage(Request $request): JsonResponse
     {
-        $data = $request->validate([
-            'images' => 'nullable|array',
-        ]);
-        $image = $data['images'][0];
-        $this->service->storeImage($image);
-        return response()->noContent();
+        /** @var UploadedFile $image */
+        $image = collect($request->files->get('images'))->first();
 
+        return $this->sendResponse([
+            'user' => new UserResource($this->service->storeImage($request->user(), $image))
+        ]);
     }
 
 

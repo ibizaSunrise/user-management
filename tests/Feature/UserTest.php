@@ -14,32 +14,44 @@ class UserTest extends TestCase
 
     use WithFaker;
 
-    public function test_a_basic_request()
+    public function testUserListAuth()
     {
-        $response = $this->get('/');
+        $user = User::factory()->create();
 
-        $response->assertStatus(200);
-            //todo: assertJson
-//            ->assertJson([
-//            'success' => false
-//        ]);;
+        $response = $this->actingAs($user, 'web')
+            ->getJson('/api/user');
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'success',
+                'message',
+                'data' => [
+                    'users' => [
+                        '*' => [
+                            'name',
+                            'surname',
+                            'email'
+                        ]
+                    ]
+                ]
+            ]);
+
+
     }
 
 
-//    public function testUserListWithoutAuth()
-//    {
-//        $user = User::factory()->create();
-////todo: test without guard
-//        $response = $this->actingAs($user, null)
-//            ->getJson('/user');
-//
-//        $response
-//            ->assertStatus(403)
-//            ->assertJson([
-//                'success' => false
-//            ]);
-//    }
-//
+    public function testUserListWithoutAuth()
+    {
+        $response = $this->getJson('/api/user');
+
+        $response
+            ->assertStatus(401)
+            ->assertJson([
+                'message' => 'Unauthenticated.'
+            ]);
+    }
+
 
     public function testStoreUser()
     {
@@ -57,7 +69,18 @@ class UserTest extends TestCase
             ->postJson('/api/user', $data);
 
         $response
-            ->assertStatus(201);
+            ->assertStatus(201)
+            ->assertJsonStructure([
+                'success',
+                'message',
+                'data' => [
+                    'user' => [
+                        'name',
+                        'surname',
+                        'email'
+                    ]
+                ]
+            ]);
 
     }
 
@@ -72,7 +95,10 @@ class UserTest extends TestCase
         $response = $this->actingAs($user, 'web')
             ->postJson('/api/user', $data);
 
-        $response->assertStatus(422);
+        $response->assertStatus(422)
+        ->assertJsonStructure([
+            'errors'
+        ]);
     }
 
     public function testUpdateUser()
@@ -90,7 +116,7 @@ class UserTest extends TestCase
         $response = $this->actingAs($user, 'web')
             ->putJson('/api/user/' . $user->id, $data);
         $response
-            ->assertStatus(200);
+            ->assertStatus(201);
 
     }
 

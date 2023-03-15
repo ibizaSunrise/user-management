@@ -18,14 +18,18 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 window.axios.defaults.withCredentials = true;
 
-window.axios.interceptors.response.use({}, err => {
+window.axios.interceptors.response.use(r => r, err => {
     if(err.response.status === 401 || err.response.status === 419){
         const token = localStorage.getItem('x_xsrf_token')
         if(token){
             localStorage.removeItem('x_xsrf_token')
         }
-        router.push({name: 'user.login'})
+
+        router.push({name: 'user.login'});
+        return;
     }
+
+  return err;
 })
 
 /**

@@ -1,50 +1,61 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Laravel OpenApi Demo Documentation",
-        "description": "L5 Swagger OpenApi description",
-        "contact": {
-            "email": "admin@admin.com"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
-        "version": "1.0.0"
+        "title": "My API",
+        "version": "0.1"
     },
-    "servers": [
-        {
-            "url": "http://project.test/api/v1",
-            "description": "Demo API Server"
-        }
-    ],
     "paths": {
-        "/user": {
+        "/users": {
             "get": {
                 "tags": [
-                    "Projects"
+                    "Users"
                 ],
-                "summary": "Get list of users",
-                "description": "Returns list of users",
-                "operationId": "getUsersList",
+                "description": "Get list of users",
+                "operationId": "getListOfUsers",
                 "responses": {
                     "200": {
-                        "description": "Successful operation"
+                        "description": "Get list of users."
                     },
                     "401": {
-                        "description": "Unauthenticated"
+                        "description": "Unauthorized"
                     },
-                    "403": {
-                        "description": "Forbidden"
+                    "404": {
+                        "description": "Not Found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            },
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
             }
         }
     },
     "tags": [
         {
-            "name": "Projects",
-            "description": "API Endpoints of Projects"
+            "name": "Auth",
+            "description": "Auth endpoints"
+        },
+        {
+            "name": "Users",
+            "description": "Users endpoints"
         }
     ]
 }

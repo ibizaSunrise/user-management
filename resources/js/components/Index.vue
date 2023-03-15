@@ -6,7 +6,6 @@
                     <a class="app-logo me-3 hv" href="/">User Management</a>
                     <router-link v-if="token" class="nav-link hv" :to="{name: 'users'}">Users</router-link>
                     <a target="_blank" class="nav-link m-lg-2 hv" href="/api/documentation">Swagger</a>
-
                 </div>
                 <div class="d-flex align-items-center">
                     <router-link v-if="!token" class="nav-link hv" :to="{name: 'user.login'}">Log in</router-link>
@@ -15,7 +14,7 @@
                     <a v-if="token" @click.prevent="logout" class="btn btn-primary m-lg-2 bhv" href="#">Logout</a>
 
                     <router-link v-if="token" class="nav-link d-flex align-items-center" :to="{name: 'user.image'}">
-                        <img :src="src" class="rounded-circle my-img"
+                        <img :src="authUser.path" class="rounded-circle my-img"
                              height="40"
                              width="40"
                              alt="Avatar"
@@ -31,18 +30,24 @@
 </template>
 
 <script>
+import {EventBus} from "../event-bus";
+
 export default {
     name: "Index",
     data() {
         return {
             token: null,
             src: 'https://mdbootstrap.com/img/new/avatars/2.jpg',
-            authUser: null
+            authUser: {
+                path: 'https://mdbootstrap.com/img/new/avatars/2.jpg'
+            }
         }
     },
     mounted() {
-        this.getToken()
-        this.getAuthUser()
+        this.getToken();
+        this.getAuthUser();
+
+        EventBus.$on('user.update', user => this.authUser = user);
     },
     updated() {
         this.getToken()
@@ -59,11 +64,9 @@ export default {
         getAuthUser(){
             if(this.token){
                 axios.get('/api/user/auth').then(res => {
-                    this.authUser = res.data
-                    if(res.data.path){
-                        this.src = res.data.path
+                    if(res.data.data.user.path){
+                        this.authUser = res.data.data.user
                     }
-
                 })
             }
         },

@@ -44,23 +44,27 @@
                     <div class="modal-body">
                         <form @submit.prevent="editmode ? updateUser() : createUser()" class="p-5">
                             <div class="form-outline mb-4">
-                                <input v-model="form.name" type="text" class="form-control"/>
                                 <label class="form-label">Name</label>
+                                <input v-model="form.name" type="text" class="form-control"/>
+                                <ValidationError :if="errors.hasOwnProperty('name')" :errors="errors?.name || []" />
                             </div>
 
                             <div class="form-outline mb-4">
-                                <input v-model="form.surname" type="text" class="form-control"/>
                                 <label class="form-label">Surname</label>
+                                <input v-model="form.surname" type="text" class="form-control"/>
+                                <ValidationError :if="errors.hasOwnProperty('surname')" :errors="errors?.surname || []" />
                             </div>
 
                             <div class="form-outline mb-4">
-                                <input v-model="form.email" type="email" class="form-control"/>
                                 <label class="form-label">Email</label>
+                                <input v-model="form.email" type="email" class="form-control"/>
+                                <ValidationError :if="errors.hasOwnProperty('email')" :errors="errors?.email || []" />
                             </div>
 
                             <div class="form-outline mb-4">
-                                <input v-model="form.password" type="password" class="form-control"/>
                                 <label class="form-label">Password</label>
+                                <input v-model="form.password" type="password" class="form-control"/>
+                                <ValidationError :if="errors.hasOwnProperty('password')" :errors="errors?.password || []" />
                             </div>
 
                         </form>
@@ -83,6 +87,7 @@
 
 <script>
 import Form from 'vform'
+import ValidationError from "./errors/ValidationError";
 
 export default {
     name: "Users",
@@ -103,45 +108,51 @@ export default {
             })
         }
     },
+    components: {
+        ValidationError
+    },
     mounted() {
         this.getUsers()
     },
     methods: {
         getUsers() {
             axios.get('/api/user')
-                .then(({data}) => {
-                    this.users = data.data
-
-                })
+                .then(({data}) => this.users = data.data.users);
         },
         createUser() {
             axios.post('/api/user', {...this.form})
-                .then(res => {
-                    console.log(res)
-                    // const url = new URL('/users', window.location.origin)
-                    // window.location.href = url.toString()
-                }).catch(e => {
-                // if(e.status == 422){
-                console.log(e)
-                // this.errors = e.response.data.errors
-                // }
-            })
+                .then(r => {
+                    if (r.hasOwnProperty('response')) {
+                        this.errors = r.response.data.errors;
 
+                        if (r.response.status !== 422) {
+                            return;
+                        }
+
+                        return;
+                    }
+                    const url = new URL('/users', window.location.origin)
+                    window.location.href = url.toString()
+                    console.log('success', r.data);
+                });
         },
 
         updateUser(id) {
-
             axios.put(`/api/user/${id}`, {...this.form})
-                .then(res => {
+                .then(r => {
+                    if (r.hasOwnProperty('response')) {
+                        this.errors = r.response.data.errors;
+
+                        if (r.response.status !== 422) {
+                            return;
+                        }
+
+                        return;
+                    }
                     const url = new URL('/users', window.location.origin)
                     window.location.href = url.toString()
-                })
-                .catch(e => {
-                    // if(e.status == 422){
-                    console.log(e)
-                    // this.errors = e.response.data.errors
-                    // }
-                })
+                    console.log('success', r.data);
+                });
 
         },
         deleteUser(id) {
@@ -153,6 +164,7 @@ export default {
 
         open(mode, id = null) {
             if (mode === 'add') {
+                this.form.reset()
                 this.editmode = false
             }
             if (mode === 'edit') {

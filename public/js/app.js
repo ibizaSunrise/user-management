@@ -5313,18 +5313,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../event-bus */ "./resources/js/event-bus.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Index",
   data: function data() {
     return {
       token: null,
       src: 'https://mdbootstrap.com/img/new/avatars/2.jpg',
-      authUser: null
+      authUser: {
+        path: 'https://mdbootstrap.com/img/new/avatars/2.jpg'
+      }
     };
   },
   mounted: function mounted() {
+    var _this = this;
     this.getToken();
     this.getAuthUser();
+    _event_bus__WEBPACK_IMPORTED_MODULE_0__.EventBus.$on('user.update', function (user) {
+      return _this.authUser = user;
+    });
   },
   updated: function updated() {
     this.getToken();
@@ -5334,21 +5342,20 @@ __webpack_require__.r(__webpack_exports__);
       this.token = localStorage.getItem('x_xsrf_token');
     },
     logout: function logout() {
-      var _this = this;
+      var _this2 = this;
       localStorage.removeItem('x_xsrf_token');
       axios.post('/logout').then(function (res) {
-        return _this.$router.push({
+        return _this2.$router.push({
           name: 'user.login'
         });
       });
     },
     getAuthUser: function getAuthUser() {
-      var _this2 = this;
+      var _this3 = this;
       if (this.token) {
         axios.get('/api/user/auth').then(function (res) {
-          _this2.authUser = res.data;
-          if (res.data.path) {
-            _this2.src = res.data.path;
+          if (res.data.data.user.path) {
+            _this3.authUser = res.data.data.user;
           }
         });
       }
@@ -5436,7 +5443,7 @@ var render = function render() {
   }, [_c("img", {
     staticClass: "rounded-circle my-img",
     attrs: {
-      src: _vm.src,
+      src: _vm.authUser.path,
       height: "40",
       width: "40",
       alt: "Avatar",
@@ -5499,7 +5506,9 @@ try {
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.withCredentials = true;
-window.axios.interceptors.response.use({}, function (err) {
+window.axios.interceptors.response.use(function (r) {
+  return r;
+}, function (err) {
   if (err.response.status === 401 || err.response.status === 419) {
     var token = localStorage.getItem('x_xsrf_token');
     if (token) {
@@ -5508,7 +5517,9 @@ window.axios.interceptors.response.use({}, function (err) {
     _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
       name: 'user.login'
     });
+    return;
   }
+  return err;
 });
 
 /**
@@ -5527,6 +5538,23 @@ window.axios.interceptors.response.use({}, function (err) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/event-bus.js":
+/*!***********************************!*\
+  !*** ./resources/js/event-bus.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "EventBus": () => (/* binding */ EventBus)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+
+var EventBus = new vue__WEBPACK_IMPORTED_MODULE_0__["default"]();
 
 /***/ }),
 
