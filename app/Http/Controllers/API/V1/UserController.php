@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 
-
 /**
  * @OA\Info(title="My API", version="0.1")
  * @OA\Schemes(format="http")
@@ -31,10 +30,6 @@ use Illuminate\Support\Facades\Validator;
  *      scheme="bearer",
  *      bearerFormat="JWT",
  * ),
- * @OA\Tag(
- *     name="Auth",
- *     description="Auth endpoints",
- * )
  * @OA\Tag(
  *     name="Users",
  *     description="Users endpoints",
@@ -62,13 +57,15 @@ class UserController extends Controller
      *          description="Get list of users.",
      *          @OA\JsonContent(type="object",
      *              @OA\Property(property="message", type="string"),
-     *              @OA\Property(property="data", type="array",
-     *                  @OA\Items(type="object",
-     *                      @OA\Property(property="id", type="integer"),
-     *                      @OA\Property(property="name", type="string"),
-     *                      @OA\Property(property="surname", type="string"),
-     *                      @OA\Property(property="email", type="string"),
-     *                      @OA\Property(property="path", type="string"),
+     *              @OA\Property(property="data", type="object" ,
+     *                  @OA\Property(property="users", type="array",
+     *                      @OA\Items(type="object",
+     *                          @OA\Property(property="id", type="integer"),
+     *                          @OA\Property(property="name", type="string"),
+     *                          @OA\Property(property="surname", type="string"),
+     *                          @OA\Property(property="email", type="string"),
+     *                          @OA\Property(property="path", type="string"),
+     *                      ),
      *                  ),
      *              ),
      *          ),
@@ -77,7 +74,6 @@ class UserController extends Controller
      *       @OA\Response(response=404, description="Not Found"),
      * )
      *
-     * @return JsonResponse
      */
 
     public function index(): JsonResponse
@@ -87,17 +83,52 @@ class UserController extends Controller
         ]);
     }
 
-
     /**
-     * @param UserRequest $request
-     * @return JsonResponse
+     * @OA\POST(
+     * path="/users",
+     * summary="Add user",
+     * description="Add user",
+     * tags={"Users"},
+     * security={{"bearerAuth":{}}},
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Provide All Info Below",
+     *    @OA\JsonContent(
+     *       required={"email","password","name","surname"},
+     *       @OA\Property(property="email", type="email", format="text", example="mercedes68@example.org"),
+     *       @OA\Property(property="password", type="string", format="text", example="123456789"),
+     *       @OA\Property(property="name", type="string", example="Anna"),
+     *       @OA\Property(property="surname", type="string", example="Fox"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=201,
+     *    description="Created",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="success", type="string"),
+     *       @OA\Property(property="message", type="string"),
+     *       @OA\Property(property="data", type="object"),
+     *     )
+     *        )
+     *     ),
+     *   @OA\Response(
+     *    response=500,
+     *    description="User Not register",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="error", type="string"),
+     *       @OA\Property(property="message", type="string")
+     *        )
+     *     )
+     * )
      */
+
     public function store(UserRequest $request): JsonResponse
     {
         return $this->sendResponse([
             'user' => $this->service->makeNewUser($request->validated())
         ], ' OK', 201);
     }
+
 
     /**
      * Update the specified resource in storage.

@@ -8,7 +8,6 @@ class UserResource extends JsonResource
 {
 
 
-
     /**
      * Transform the resource into an array.
      *
