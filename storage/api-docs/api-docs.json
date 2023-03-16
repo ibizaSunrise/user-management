@@ -5,11 +5,12 @@
         "version": "0.1"
     },
     "paths": {
-        "/users": {
+        "/api/user": {
             "get": {
                 "tags": [
                     "Users"
                 ],
+                "summary": "Users list",
                 "description": "Get list of users",
                 "operationId": "getListOfUsers",
                 "responses": {
@@ -75,7 +76,7 @@
                 ],
                 "summary": "Add user",
                 "description": "Add user",
-                "operationId": "1405a165f7b8d99ee7981d1412c6bbbf",
+                "operationId": "e62c685cc38d5057ff0eee6e66bc7761",
                 "requestBody": {
                     "description": "Provide All Info Below",
                     "required": true,
@@ -121,12 +122,45 @@
                                 "schema": {
                                     "properties": {
                                         "success": {
-                                            "type": "string"
+                                            "type": "boolean",
+                                            "example": true
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "example": "success"
                                         },
                                         "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 70
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Anna"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "anna@gmail.com"
+                                                        },
+                                                        "surname": {
+                                                            "type": "string",
+                                                            "example": "Rutkowska"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
                                             "type": "object"
                                         }
                                     },
@@ -142,27 +176,215 @@
                     }
                 ]
             }
+        },
+        "/api/user/{id}": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update user",
+                "description": "Update user",
+                "operationId": "44ee65e3907e090f44bf2ebdc07ecbf1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Provide All Info Below",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "password"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 70
+                                    },
+                                    "email": {
+                                        "type": "email",
+                                        "format": "text",
+                                        "example": "mercedes68@example.org"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "123456789"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Anna"
+                                    },
+                                    "surname": {
+                                        "type": "string",
+                                        "example": "Fox"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 70
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Anna"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "anna@gmail.com"
+                                                        },
+                                                        "surname": {
+                                                            "type": "string",
+                                                            "example": "Rutkowska"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete user",
+                "description": "Delete user",
+                "operationId": "807de0d0c75fe6828b0d0e70c26fcda5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "User deleted"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized for delete"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/getToken ": {
+            "post": {
+                "tags": [
+                    "Retrieve Authorization Token"
+                ],
+                "summary": "Post your email and password and we will return a token. Use the token in the 'Authorization' header like so 'Bearer YOUR_TOKEN'",
+                "description": "",
+                "operationId": "",
+                "requestBody": {
+                    "description": "The Token Request",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "test@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "testtesttest"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "422": {
+                        "description": "The provided credentials are incorrect."
+                    }
+                }
+            }
         }
     },
     "components": {
         "responses": {
-            "500": {
-                "description": "User Not register",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "properties": {
-                                "error": {
-                                    "type": "string"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
+            "400": {
+                "description": "Bad request"
+            },
+            "401": {
+                "description": "Authorization information is missing or invalid"
+            },
+            "403": {
+                "description": "Forbidden"
+            },
+            "422": {
+                "description": "The given data was invalid"
             }
         },
         "securitySchemes": {
@@ -173,15 +395,14 @@
                 "bearerFormat": "JWT",
                 "scheme": "bearer"
             },
-            "sanctum": {
-                "type": "apiKey",
-                "description": "Enter token in format (Bearer <token>)",
-                "name": "Authorization",
-                "in": "header"
-            }
+            "0": []
         }
     },
     "tags": [
+        {
+            "name": "Retrieve Authorization Token",
+            "description": "Token generation"
+        },
         {
             "name": "Users",
             "description": "Users endpoints"

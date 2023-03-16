@@ -101,6 +101,7 @@ class UserTest extends TestCase
         ]);
     }
 
+
     public function testUpdateUser()
     {
         $user = User::factory()->create();

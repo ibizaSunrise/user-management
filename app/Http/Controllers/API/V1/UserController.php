@@ -8,15 +8,10 @@ use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserService;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 
 /**
@@ -29,6 +24,10 @@ use Illuminate\Support\Facades\Validator;
  *      type="http",
  *      scheme="bearer",
  *      bearerFormat="JWT",
+ * ),
+ * @OA\Tag(
+ *     name="Retrieve Authorization Token",
+ *     description="Token generation",
  * ),
  * @OA\Tag(
  *     name="Users",
@@ -47,8 +46,9 @@ class UserController extends Controller
     /**
      *
      * @OA\Get(
-     *      path="/users",
+     *      path="/api/user",
      *      operationId="getListOfUsers",
+     *      summary="Users list",
      *      tags={"Users"},
      *      description="Get list of users",
      *      security={{"bearerAuth":{}}},
@@ -84,8 +84,8 @@ class UserController extends Controller
     }
 
     /**
-     * @OA\POST(
-     * path="/users",
+     * @OA\Post(
+     * path="/api/user",
      * summary="Add user",
      * description="Add user",
      * tags={"Users"},
@@ -104,21 +104,26 @@ class UserController extends Controller
      * @OA\Response(
      *    response=201,
      *    description="Created",
-     *    @OA\JsonContent(
-     *       @OA\Property(property="success", type="string"),
-     *       @OA\Property(property="message", type="string"),
-     *       @OA\Property(property="data", type="object"),
-     *     )
+     *          @OA\JsonContent(type="object",
+     *              @OA\Property(property="success", type="boolean", example=true),
+     *              @OA\Property(property="message", type="string", example="success"),
+     *              @OA\Property(property="data", type="object" ,
+     *                  @OA\Property(property="user", type="object",
+     *                          @OA\Property(property="id", type="integer", example=70),
+     *                          @OA\Property(property="name", type="string", example="Anna"),
+     *                          @OA\Property(property="email", type="string", example="anna@gmail.com"),
+     *                          @OA\Property(property="surname", type="string", example="Rutkowska"),
+     *                          @OA\Property(property="updated_at", type="string", format="date-time"),
+     *                          @OA\Property(property="created_at", type="string", format="date-time"),
+     *                  ),
+     *              ),
+     *          ),
      *        )
      *     ),
-     *   @OA\Response(
-     *    response=500,
-     *    description="User Not register",
-     *    @OA\JsonContent(
-     *       @OA\Property(property="error", type="string"),
-     *       @OA\Property(property="message", type="string")
-     *        )
-     *     )
+     * @OA\Response(response=400, description="Bad request"),
+     * @OA\Response(response=401, description="Authorization information is missing or invalid"),
+     * @OA\Response(response=403, description="Forbidden"),
+     * @OA\Response(response=422, description="The given data was invalid"),
      * )
      */
 
@@ -129,14 +134,50 @@ class UserController extends Controller
         ], ' OK', 201);
     }
 
-
     /**
-     * Update the specified resource in storage.
-     *
-     * @param UserRequest $request
-     * @param User $user
-     * @return JsonResponse
+     * @OA\Put(
+     * path="/api/user/{id}",
+     * summary="Update user",
+     * description="Update user",
+     * tags={"Users"},
+     * @OA\Parameter(name="id", in="path", description="User id", required=true,
+     *    @OA\Schema(type="integer")
+     * ),
+     * security={{"bearerAuth":{}}},
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Provide All Info Below",
+     *    @OA\JsonContent(
+     *       required={"password"},
+     *       @OA\Property(property="id", type="integer", example=70),
+     *       @OA\Property(property="email", type="email", format="text", example="mercedes68@example.org"),
+     *       @OA\Property(property="password", type="string", format="text", example="123456789"),
+     *       @OA\Property(property="name", type="string", example="Anna"),
+     *       @OA\Property(property="surname", type="string", example="Fox"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=201,
+     *    description="Updated",
+     *          @OA\JsonContent(type="object",
+     *              @OA\Property(property="success", type="boolean", example=true),
+     *              @OA\Property(property="message", type="string", example="success"),
+     *              @OA\Property(property="data", type="object" ,
+     *                  @OA\Property(property="user", type="object",
+     *                          @OA\Property(property="id", type="integer", example=70),
+     *                          @OA\Property(property="name", type="string", example="Anna"),
+     *                          @OA\Property(property="email", type="string", example="anna@gmail.com"),
+     *                          @OA\Property(property="surname", type="string", example="Rutkowska"),
+     *                          @OA\Property(property="updated_at", type="string", format="date-time"),
+     *                          @OA\Property(property="created_at", type="string", format="date-time"),
+     *                  ),
+     *              ),
+     *          ),
+     *        )
+     *     ),
+     * )
      */
+
     public function update(UserRequest $request, User $user): JsonResponse
     {
         return $this->sendResponse([
@@ -145,11 +186,21 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param User $user
-     * @return Response
+     * @OA\Delete(
+     * path="/api/user/{id}",
+     * summary="Delete user",
+     * description="Delete user",
+     * tags={"Users"},
+     * @OA\Parameter(name="id", in="path", description="User id", required=true,
+     *    @OA\Schema(type="integer")
+     * ),
+     * security={{"bearerAuth":{}}},
+     * @OA\Response(response=204, description="User deleted"),
+     * @OA\Response(response=404, description="User not found"),
+     * @OA\Response(response=401, description="Unauthorized for delete")
+     * )
      */
+
     public function destroy(User $user): Response
     {
         $user->delete();
@@ -157,6 +208,10 @@ class UserController extends Controller
         return response()->noContent();
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function getAuthUser(Request $request): JsonResponse
     {
         return $this->sendResponse([
@@ -164,6 +219,10 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function handleImage(Request $request): JsonResponse
     {
         /** @var UploadedFile $image */
