@@ -17,6 +17,10 @@
 
 ![uploadAvatar](https://user-images.githubusercontent.com/66250856/225462151-fb29e070-cddb-4ff8-9b98-b2ec58f64f4a.jpg)
 
+- Swagger CRUD documentation and token generation using email and password
+
+![swager](https://user-images.githubusercontent.com/66250856/225704864-ef10bf30-3b3d-42b3-8595-d306ed7fe206.jpg)
+
 
 ## Tech Specification
 - php 8
