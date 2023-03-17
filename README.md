@@ -3,19 +3,20 @@
 ## About Repository
 
 ### A very simple Laravel 8 + Vue 2  SPA Application.
-- Login, Register using Sanctum. Show error messages from Laravel validation
 
-![registration](https://user-images.githubusercontent.com/66250856/225461153-c995abcc-d98e-4f45-b5ec-3e95ccb3eb6e.jpg)
+#### Login, Register using Sanctum. Show error messages from Laravel validation
 
-- CRUD User operations
+![reg](https://user-images.githubusercontent.com/66250856/225889781-06d795d5-a0be-461d-9e87-8484a32da2b7.jpg)
+
+#### CRUD User operations
 
 ![crud](https://user-images.githubusercontent.com/66250856/225885708-b4282a85-3b9f-4e7a-ba20-bfa0b14bec83.jpg)
 
-- Images uploading 
+#### Images uploading 
 
 ![upload](https://user-images.githubusercontent.com/66250856/225886235-e083214b-4a5b-4ca3-beb1-00851e26aa9e.jpg)
 
-- Swagger CRUD documentation and token generation using email and password
+#### Swagger CRUD documentation and token generation using email and password
 
 ![swager](https://user-images.githubusercontent.com/66250856/225704864-ef10bf30-3b3d-42b3-8595-d306ed7fe206.jpg)
 
