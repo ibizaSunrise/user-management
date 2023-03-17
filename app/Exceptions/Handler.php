@@ -6,6 +6,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -53,6 +54,16 @@ class Handler extends ExceptionHandler
                     'data' => null,
                     'errors' => $errors
                 ], 422);
+            }
+
+            if ($e instanceof UnauthorizedHttpException) {
+                return new JsonResponse([
+                    'status' => 401,
+                    'data' => null,
+                    'errors' => [
+                        $e->getMessage()
+                    ]
+                ], 401);
             }
 
             return new JsonResponse([
