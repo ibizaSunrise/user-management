@@ -5380,10 +5380,8 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "container"
-  }, [_c("nav", {
-    staticClass: "navbar navbar-light bg-light mb-3"
+  return _c("div", [_c("nav", {
+    staticClass: "navbar navbar-light bg-light mb-3 px-3"
   }, [_c("div", {
     staticClass: "container-fluid"
   }, [_c("div", {
@@ -5416,7 +5414,7 @@ var render = function render() {
       }
     }
   }, [_vm._v("Log in")]) : _vm._e(), _vm._v(" "), !_vm.token ? _c("router-link", {
-    staticClass: "btn btn-primary m-lg-2 bhv",
+    staticClass: "btn btn-outline-primary m-lg-2 bhv",
     attrs: {
       to: {
         name: "user.register"
@@ -10990,7 +10988,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.app-logo[data-v-bb962f12] {\n    color: #0d6efd;\n    font-size: 1.5rem;\n    font-weight: bold;\n    text-align: center;\n    text-decoration: none;\n}\n.my-img[data-v-bb962f12]{\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.hv[data-v-bb962f12]:hover{\n    color: #0c63e4;\n}\n.bhv[data-v-bb962f12]:hover{\n    background-color: #0c63e4;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.app-logo[data-v-bb962f12] {\n    color: #0d6efd;\n    font-size: 1.5rem;\n    font-weight: bold;\n    text-align: center;\n    text-decoration: none;\n}\n.my-img[data-v-bb962f12]{\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.hv[data-v-bb962f12]:hover{\n    color: #0c63e4;\n}\n.bhv[data-v-bb962f12]:hover{\n    background-color: #0c63e4;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

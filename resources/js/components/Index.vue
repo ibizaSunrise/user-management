@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <nav class="navbar navbar-light bg-light mb-3">
+    <div>
+        <nav class="navbar navbar-light bg-light mb-3 px-3">
             <div class="container-fluid">
                 <div class="d-flex align-items-center">
                     <a class="app-logo me-3 hv" href="/">User Management</a>
@@ -9,7 +9,7 @@
                 </div>
                 <div class="d-flex align-items-center">
                     <router-link v-if="!token" class="nav-link hv" :to="{name: 'user.login'}">Log in</router-link>
-                    <router-link v-if="!token" class="btn btn-primary m-lg-2 bhv" :to="{name: 'user.register'}">Sign up
+                    <router-link v-if="!token" class="btn btn-outline-primary m-lg-2 bhv" :to="{name: 'user.register'}">Sign up
                     </router-link>
                     <a v-if="token" @click.prevent="logout" class="btn btn-outline-primary m-lg-2 bhv" href="#">Logout</a>
 
@@ -91,4 +91,5 @@ export default {
 .bhv:hover{
     background-color: #0c63e4;
 }
+
 </style>
