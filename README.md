@@ -10,7 +10,7 @@
 
 #### CRUD User operations
 
-![crud](https://user-images.githubusercontent.com/66250856/225885708-b4282a85-3b9f-4e7a-ba20-bfa0b14bec83.jpg)
+![crud1](https://user-images.githubusercontent.com/66250856/225891429-4cf1ccc8-3b5b-4b58-9fb5-2d76278bee25.jpg
 
 #### Images uploading 
 
