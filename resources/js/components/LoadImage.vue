@@ -14,7 +14,7 @@ import {EventBus} from "../event-bus";
 export default {
     name: "LoadImage",
     components: {
-        vueDropzone: vue2Dropzone
+        vueDropzone: vue2Dropzone,
     },
     data: function () {
         return {

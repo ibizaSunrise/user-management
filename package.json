@@ -24,6 +24,8 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "primeicons": "^6.0.1",
+        "primevue": "^2.10.1",
         "vform": "^2.1.2",
         "vue-router": "^3.6.5",
         "vue2-dropzone": "^3.6.0"

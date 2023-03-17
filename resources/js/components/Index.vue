@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <nav class="navbar navbar-light bg-light mb-5">
+        <nav class="navbar navbar-light bg-light mb-3">
             <div class="container-fluid">
                 <div class="d-flex align-items-center">
                     <a class="app-logo me-3 hv" href="/">User Management</a>
@@ -11,7 +11,7 @@
                     <router-link v-if="!token" class="nav-link hv" :to="{name: 'user.login'}">Log in</router-link>
                     <router-link v-if="!token" class="btn btn-primary m-lg-2 bhv" :to="{name: 'user.register'}">Sign up
                     </router-link>
-                    <a v-if="token" @click.prevent="logout" class="btn btn-primary m-lg-2 bhv" href="#">Logout</a>
+                    <a v-if="token" @click.prevent="logout" class="btn btn-outline-primary m-lg-2 bhv" href="#">Logout</a>
 
                     <router-link v-if="token" class="nav-link d-flex align-items-center" :to="{name: 'user.image'}">
                         <img :src="authUser.path" class="rounded-circle my-img"

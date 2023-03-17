@@ -11,7 +11,7 @@ class SanctumController extends Controller
 {
     /**
      * @OA\Post(path="/api/getToken ", tags={"Retrieve Authorization Token"},
-     *   summary="Post your email and password and we will return a token. Use the token in the 'Authorization' header like so 'Bearer YOUR_TOKEN'",
+     *   summary="Post your email and password and we will return a token.",
      *   operationId="",
      *   description="",
      *   @OA\RequestBody(
