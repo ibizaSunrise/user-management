@@ -22,12 +22,14 @@
 
 
 ## Tech Specification
-- php 8
-- node 14.17.0
+- PHP 8.2
+- Node 16.3.0
+- NPM 8.0.0
 - Laravel 8
 - Vue 2 + VueRouter
 - Laravel Sanctum
 - Bootstrap
+- Docker (optionally; rootless)
 
 
 ## Features
@@ -53,6 +55,15 @@
 - `npm run dev`
 - `php artisan serve`
 - `admin login: admin@gmail.com; pas: 123123`
+
+#### With Docker
+
+- `cd docker`
+- `docker-compose -f docker-compose.local.yml -p {stack-name} up -d`
+
+### Dockerized with a script
+
+- `./setup.sh` from the project root
 
 #### To reset db to first state
 

@@ -129,7 +129,7 @@ export default {
                 .then(({data}) => this.users = data.data.users);
         },
         createUser() {
-            axios.post('/api/user', {...this.form})
+            axios.post('/api/v2/user', {...this.form})
                 .then(r => {
                     if (r.hasOwnProperty('response')) {
                         this.errors = r.response.data.errors;
