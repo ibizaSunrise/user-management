@@ -20,6 +20,10 @@
 
 ![swager](https://user-images.githubusercontent.com/66250856/225704864-ef10bf30-3b3d-42b3-8595-d306ed7fe206.jpg)
 
+#### Swagger User CRUD documentation (CQRS pattern realization)
+
+![NombreParaImagen_002](https://user-images.githubusercontent.com/66250856/226205533-1a5639a3-ae71-465b-9331-1917443b89ff.png)
+
 
 ## Tech Specification
 - PHP 8.2
