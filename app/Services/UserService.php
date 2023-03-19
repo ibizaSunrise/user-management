@@ -28,7 +28,6 @@ class UserService
         $user->fill($data);
         $user->password = Hash::make($data['password']);
         $user->save();
-//        $user->update($data);
 
         return $user->refresh();
     }

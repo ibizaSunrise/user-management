@@ -32,7 +32,16 @@ use Illuminate\Http\UploadedFile;
  * @OA\Tag(
  *     name="Users",
  *     description="Users endpoints",
- * )
+ * ),
+ * @OA\Tag(
+ *     name="UsersCQRS",
+ *     description="Users endpoints (CSRF pattern)",
+ * ),
+ * @OA\Response(response=401, description="Unauthorized"),
+ * @OA\Response(response=404, description="Not Found"),
+ * @OA\Response(response=400, description="Bad request"),
+ * @OA\Response(response=403, description="Forbidden"),
+ * @OA\Response(response=422, description="The given data was invalid"),
  */
 class UserController extends Controller
 {
@@ -70,8 +79,6 @@ class UserController extends Controller
      *              ),
      *          ),
      *       ),
-     *       @OA\Response(response=401, description="Unauthorized"),
-     *       @OA\Response(response=404, description="Not Found"),
      * )
      *
      */
@@ -120,10 +127,6 @@ class UserController extends Controller
      *          ),
      *        )
      *     ),
-     * @OA\Response(response=400, description="Bad request"),
-     * @OA\Response(response=401, description="Authorization information is missing or invalid"),
-     * @OA\Response(response=403, description="Forbidden"),
-     * @OA\Response(response=422, description="The given data was invalid"),
      * )
      */
 
@@ -196,8 +199,6 @@ class UserController extends Controller
      * ),
      * security={{"bearerAuth":{}}},
      * @OA\Response(response=204, description="User deleted"),
-     * @OA\Response(response=404, description="User not found"),
-     * @OA\Response(response=401, description="Unauthorized for delete")
      * )
      */
 

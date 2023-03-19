@@ -23,7 +23,10 @@ Route::middleware('auth:sanctum')
                 Route::prefix('user')
                     ->name('user.')
                     ->group(function () {
-                        Route::post('', [\App\Http\Controllers\API\V2\UserController::class, 'store'])->name('store');
+                        Route::get('/', [\App\Http\Controllers\API\V2\UserController::class, 'index'])->name('index');
+                        Route::post('/', [\App\Http\Controllers\API\V2\UserController::class, 'store'])->name('store');
+                        Route::put('/{id}', [\App\Http\Controllers\API\V2\UserController::class, 'update'])->name('update');
+                        Route::delete('/{id}', [\App\Http\Controllers\API\V2\UserController::class, 'destroy'])->name('delete');
                     });
             });
     });

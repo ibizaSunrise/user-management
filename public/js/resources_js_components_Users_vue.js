@@ -79,7 +79,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     createUser: function createUser() {
       var _this2 = this;
-      axios.post('/api/v2/user', _objectSpread({}, this.form)).then(function (r) {
+      axios.post('/api/user', _objectSpread({}, this.form)).then(function (r) {
         if (r.hasOwnProperty('response')) {
           _this2.errors = r.response.data.errors;
           if (r.response.status !== 422) {
