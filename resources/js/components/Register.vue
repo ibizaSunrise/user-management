@@ -88,7 +88,7 @@ export default {
 <style scoped>
 .center_div {
     margin: 2rem auto;
-    width: 40%; /* value of your choice which suits your alignment */
+    width: 30%; /* value of your choice which suits your alignment */
     -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);

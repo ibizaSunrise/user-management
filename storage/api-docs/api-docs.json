@@ -197,7 +197,7 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "password"
+                                    "id"
                                 ],
                                 "properties": {
                                     "id": {
@@ -512,7 +512,7 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "password"
+                                    "id"
                                 ],
                                 "properties": {
                                     "id": {

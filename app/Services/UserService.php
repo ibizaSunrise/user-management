@@ -25,8 +25,13 @@ class UserService
 
     public function editUser(User $user, array $data): User
     {
+        foreach ($data as $k => $v){
+            if(empty($v)) unset($data[$k]);
+        }
         $user->fill($data);
-        $user->password = Hash::make($data['password']);
+        if(array_key_exists('password', $data)){
+            $user->password = Hash::make($data['password']);
+        }
         $user->save();
 
         return $user->refresh();

@@ -34,7 +34,8 @@ class UserRequest extends FormRequest
 
     }
 
-    public function createRules(){
+    public function createRules(): array
+    {
         return [
             'name' => ['required', 'string', 'max:255'],
             'surname' => ['required', 'string', 'max:255'],
@@ -43,13 +44,14 @@ class UserRequest extends FormRequest
         ];
     }
 
-    public function updateRules(){
+    public function updateRules(): array
+    {
         return [
             'id' => ['required'],
-            'name' => ['required', 'string', 'max:255'],
-            'surname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($this->id)],
-            'password' => ['required', 'string', 'min:8'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'surname' => ['nullable', 'string', 'max:255'],
+            'email' => ['nullable', 'string', 'email', 'max:255', Rule::unique('users')->ignore($this->id)],
+            'password' => ['nullable', 'string', 'min:8'],
         ];
     }
 }

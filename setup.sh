@@ -4,11 +4,6 @@ if [ ! -f '.env' ]; then
     cp ./.env.example ./.env
 fi
 
-#cd docker || exit
-#
-## shellcheck disable=SC2046
-#docker stop $(docker ps -aq)
-
 docker-compose -f docker/docker-compose.local.yml -p user-management-v2 up -d
 
 cd .. || exit

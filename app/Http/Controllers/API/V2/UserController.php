@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\V2;
 
 use App\CQRS\User\Delete\DeleteUserCommand;
-use App\CQRS\User\Index\IndexUserCommand;
+use App\CQRS\User\List\ListUserCommand;
 use App\CQRS\User\Store\StoreUserCommand;
 use App\CQRS\User\Update\UpdateUserCommand;
 use App\Http\Requests\UserRequest;
@@ -46,7 +46,7 @@ class UserController extends CQRSController
     public function index(): JsonResponse
     {
         return $this->sendResponse([
-            'users' => $this->getBus()->handle(new IndexUserCommand)
+            'users' => $this->getBus()->handle(new ListUserCommand)
         ]);
     }
 
@@ -117,7 +117,7 @@ class UserController extends CQRSController
      *    required=true,
      *    description="Provide All Info Below",
      *    @OA\JsonContent(
-     *       required={"password"},
+     *       required={"id"},
      *       @OA\Property(property="id", type="integer", example=70),
      *       @OA\Property(property="email", type="email", format="text", example="mercedes68@example.org"),
      *       @OA\Property(property="password", type="string", format="text", example="123456789"),

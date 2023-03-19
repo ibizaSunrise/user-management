@@ -1,12 +1,12 @@
 <?php
 
-namespace App\CQRS\User\Index;
+namespace App\CQRS\User\List;
 
 use App\CQRS\Core\AbstractCommand;
 
-class IndexUserCommand extends AbstractCommand
+class ListUserCommand extends AbstractCommand
 {
-    protected string $handler = IndexUserHandler::class;
+    protected string $handler = ListUserHandler::class;
 
     public function __construct(){}
 
